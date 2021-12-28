@@ -1,4 +1,4 @@
-CFLAGS=-Wall -O0 -g
+CFLAGS=-Wall -O0 -g -std=c99
 SRCS = $(wildcard *.c)
 # all object files except test.o
 OBJS = $(patsubst test.%,,$(patsubst %.c, %.o, $(SRCS)))

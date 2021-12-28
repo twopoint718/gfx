@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "gfx.h"
+#include "pbm.h"
 
 // 250 x 122
 #define ROWS 122
@@ -34,14 +35,6 @@ void clear_screen() {
             screen[i][j] = 0x00;
 }
 
-void export() {
-    int offset;
-    printf("P1\n250 122\n");
-    for (int j = 0; j < ROWS; j++) {
-        for (int i = 0; i < COLS; i++) {
-            offset = 7 - (i % 8);
-            printf("%d ", screen[i / 8][j] = 1 << offset);
-        }
-        printf("\n");
-    }
+void gfx_render() {
+    render("bitmap.pbm", COLS, ROWS, screen);
 }

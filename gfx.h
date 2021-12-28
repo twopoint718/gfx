@@ -5,5 +5,6 @@
 
 void set_pixel(uint8_t x, uint8_t y);
 void clear_pixel(uint8_t x, uint8_t y);
+void gfx_render(void);
 
 #endif // __GFX_H
