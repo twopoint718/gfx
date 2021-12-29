@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "draw.h"
-#include "gfx.h"
 
 int main(int argc, char** argv) {
-    draw_circle(125, 60, 60);
-    gfx_render();
+    for (int i = 60; i <= 250 - 60; i += 5)
+        draw_circle(i, 122/2, 60);
+    draw_render("bitmap.pbm");
     printf("Done\n");
 }

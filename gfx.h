@@ -1,10 +1,8 @@
 #ifndef __GFX_H
 #define __GFX_H
 
-#include <stdint.h>
-
-void set_pixel(uint8_t x, uint8_t y);
-void clear_pixel(uint8_t x, uint8_t y);
-void gfx_render(void);
+void set_pixel(int x, int y);
+void clear_pixel(int x, int y);
+void gfx_render(const char*);
 
 #endif // __GFX_H

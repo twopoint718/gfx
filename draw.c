@@ -1,9 +1,10 @@
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "gfx.h"
 
-// x^2 + y^2 = r^2
-void draw_circle(int x0, int y0, int r) {
+// Adafruit implementation
+void draw_circle_af(int x0, int y0, int r) {
     int f = 1 - r;
     int ddF_x = 1;
     int ddF_y = -2 * r;
@@ -35,6 +36,33 @@ void draw_circle(int x0, int y0, int r) {
         set_pixel(x0 + y, y0 + x);  // ESE
         set_pixel(x0 + y, y0 - x);  // ENE
         set_pixel(x0 + x, y0 - y);  // NNE
+    }
+}
+
+void draw_circle(unsigned int x, unsigned int y, unsigned int r) {
+    int di = 3 - 2 * r; // initial 'decision parameter', see derivation [0]
+    int xi = 0;
+    int yi = r;
+
+    while (xi <= yi) {
+        set_pixel(xi + x, yi + y);
+        set_pixel(x - xi, yi + y);
+        set_pixel(xi + x, y - yi);
+        set_pixel(x - xi, y - yi);
+
+        set_pixel(yi + x, xi + y);
+        set_pixel(x - yi, y + xi);
+        set_pixel(x + yi, y - xi);
+        set_pixel(x - yi, y - xi);
+        if (di <= 0) {
+            di = di + 4 * xi + 6;           // see derivation [1]
+            xi = xi + 1;
+            // yi remains the same
+        } else {
+            di = di + 4 * (xi - yi) + 10;   // see derivation [2]
+            xi = xi + 1;
+            yi = yi - 1;
+        }
     }
 }
 
@@ -78,3 +106,11 @@ void draw_line(int x0, int y0, int x1, int y1) {
     }
 }
 
+void draw_render(const char *filename) {
+    gfx_render(filename);
+}
+
+/*
+ * Derivation of equations for decision parameter `di`:
+ * TODO
+ */

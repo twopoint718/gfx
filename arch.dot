@@ -1,0 +1,10 @@
+digraph {
+    main -> draw [label="draw_circle"];
+    main -> draw [label="draw_line"];
+    // main -> gfx [label="gfx_render"];
+
+    draw -> gfx [label="set_pixel"];
+    draw -> gfx [label="clear_pixel"];
+
+    gfx -> pbm [label="render"];
+}

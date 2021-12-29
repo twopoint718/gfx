@@ -21,12 +21,14 @@ uint8_t screen[COLS / 8 + (COLS % 8 != 0)][ROWS];
  *                  │
  *       bit_offset: 7-(13%8)=2
  */
-void set_pixel(uint8_t x, uint8_t y) {
+void set_pixel(int x, int y) {
     int offset = 7 - (x % 8);
-    screen[x / 8][y] = 1 << offset;
+    screen[x / 8][y] |= (1 << offset);
 }
 
-void clear_pixel(uint8_t x, uint8_t y) {
+void clear_pixel(int x, int y) {
+    int offset = 7 - (x % 8);
+    screen[x / 8][y] &= ~(1 << offset);
 }
 
 void clear_screen() {
@@ -35,6 +37,6 @@ void clear_screen() {
             screen[i][j] = 0x00;
 }
 
-void gfx_render() {
-    render("bitmap.pbm", COLS, ROWS, screen);
+void gfx_render(const char *filename) {
+    render(filename, COLS, ROWS, screen);
 }
