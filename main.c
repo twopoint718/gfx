@@ -1,9 +1,12 @@
 #include <stdio.h>
 #include "draw.h"
+#include "gfx.h"
 
 int main(int argc, char** argv) {
-    for (int i = 60; i <= 250 - 60; i += 5)
-        draw_circle(i, 122/2, 60);
+    int x = 0, y = 0;
+    for (int i = 0; i < 100; i++) {
+        d2xy(100, i, &x, &y);
+        set_pixel(x, y);
+    }
     draw_render("bitmap.pbm");
-    printf("Done\n");
 }
