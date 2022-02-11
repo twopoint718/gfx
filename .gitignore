@@ -5,3 +5,5 @@ main
 test
 bitmap.pbm
 draw.js
+.DS_Store
+*.png

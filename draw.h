@@ -9,6 +9,7 @@ void draw_render(const char*);
 void d2xy(int numPoints, int value, int *px, int *py);
 int xy2d (int, int, int);
 void rot(int, int*, int*, int, int);
-void draw_char(int16_t x, int16_t y, unsigned char c, uint8_t color);
+void draw_char(int16_t x, int16_t y, unsigned char c, unsigned char color);
+void draw_char8x8(int16_t x, int16_t y, unsigned char c, unsigned char color);
 
 #endif // __DRAW_H

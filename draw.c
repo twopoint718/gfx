@@ -1,9 +1,11 @@
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <stdio.h>
 #include "draw.h"
 #include "gfx.h"
 #include "glcdfont.c"
+#include "font8x8_basic.h"
 #include "pbm.h"
 
 // Adafruit implementation
@@ -174,19 +176,28 @@ void draw_render(const char *filename) {
     @param    size_y  Font magnification level in Y-axis, 1 is 'original' size
 */
 /**************************************************************************/
-void draw_char(int16_t x, int16_t y, unsigned char c, uint8_t color) {
+void draw_char(int16_t x, int16_t y, unsigned char c, unsigned char color) {
     if ((x >= LCDWIDTH) || (y >= LCDHEIGHT) || (x < 0) || (y < 0)) // clip
         return;
 
     for (int8_t i = 0; i < 5; i++) {                // Char bitmap = 5 columns
-        uint8_t line = font[c * 5 + i];             // Get ith col of font glyph
+        char line = font[c * 5 + i];             // Get ith col of font glyph
         for (int8_t j = 0; j < 8; j++, line >>= 1) {
             if (line & 1) {
                 set_pixel(x + i, y + j);
             }
-	    /* else if (bg != color) { */
-            /*     LCD_drawPixel(x + i, y + j, bg); */
-            /* } */
         }
+    }
+}
+
+void draw_char8x8(int16_t x, int16_t y, unsigned char c, unsigned char color) {
+    if ((x >= LCDWIDTH) || (y >= LCDHEIGHT) || (x < 0) || (y < 0)) // clip
+        return;
+
+    for (int8_t j = 0; j < 8; j++) {
+        char row = font8x8_basic[c][j];
+        for (int8_t i = 0; i < 8; i++, row >>= 1)
+            if (row & 1)
+                set_pixel(x + i, y + j);
     }
 }
