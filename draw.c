@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "draw.h"
 #include "gfx.h"
+#include "glcdfont.c"
+#include "pbm.h"
 
 // Adafruit implementation
 void draw_circle_af(int x0, int y0, int r) {
@@ -156,4 +158,35 @@ void rot(int n, int *x, int *y, int rx, int ry) {
 
 void draw_render(const char *filename) {
     gfx_render(filename);
+}
+
+// Draw a character
+/**************************************************************************/
+/*!
+   @brief   Draw a single character
+    @param    x   Bottom left corner x coordinate
+    @param    y   Bottom left corner y coordinate
+    @param    c   The 8-bit font-indexed character (likely ascii)
+    @param    color 16-bit 5-6-5 Color to draw chraracter with
+    @param    bg 16-bit 5-6-5 Color to fill background with (if same as color,
+   no background)
+    @param    size_x  Font magnification level in X-axis, 1 is 'original' size
+    @param    size_y  Font magnification level in Y-axis, 1 is 'original' size
+*/
+/**************************************************************************/
+void draw_char(int16_t x, int16_t y, unsigned char c, uint8_t color) {
+    if ((x >= LCDWIDTH) || (y >= LCDHEIGHT) || (x < 0) || (y < 0)) // clip
+        return;
+
+    for (int8_t i = 0; i < 5; i++) {                // Char bitmap = 5 columns
+        uint8_t line = font[c * 5 + i];             // Get ith col of font glyph
+        for (int8_t j = 0; j < 8; j++, line >>= 1) {
+            if (line & 1) {
+                set_pixel(x + i, y + j);
+            }
+	    /* else if (bg != color) { */
+            /*     LCD_drawPixel(x + i, y + j, bg); */
+            /* } */
+        }
+    }
 }
