@@ -4,6 +4,7 @@
 #include <stdint.h>
 
 void draw_circle(unsigned int x0, unsigned int y0, unsigned int r);
+void draw_arc(int cx, int cy, int radius, int arc, void(*plot)(int, int));
 void draw_line(int x0, int y0, int x1, int y1);
 void draw_render(const char*);
 void d2xy(int numPoints, int value, int *px, int *py);

@@ -44,6 +44,29 @@ void draw_circle_af(int x0, int y0, int r) {
     }
 }
 
+// via: https://github.com/possibly-wrong/string-art
+// Call plot(_, _) to draw pixels on circle at origin with given radius.
+void draw_arc(int cx, int cy, int radius, int arc, void(*plot)(int, int)) {
+    int x = radius;
+    int y = 0;
+    int error = 3 - 2 * radius;
+    draw_line(cx, cy, cx, cy-radius);
+    while (x >= y) {
+        if (arc >= 0) { plot(cx+y, cy-x); draw_line(cx,cy,cx+y,cy-x);} //   0, 45
+        if (arc >= 1) { plot(cx+x, cy-y); draw_line(cx,cy,cx+x,cy-y);} //  45, 90
+        if (arc >= 2) { plot(cx+x, cy+y); draw_line(cx,cy,cx+x,cy+y);} //  90,145
+        if (arc >= 3) { plot(cx+y, cy+x); draw_line(cx,cy,cx+y,cy+x);} // 135,180
+        if (arc >= 4) { plot(cx-y, cy+x); draw_line(cx,cy,cx-y,cy+x);} // 180,225
+        if (arc >= 5) { plot(cx-x, cy+y); draw_line(cx,cy,cx-x,cy+y);} // 225,270
+        if (arc >= 6) { plot(cx-x, cy-y); draw_line(cx,cy,cx-x,cy-y);} // 270,315
+        if (arc >= 7) { plot(cx-y, cy-x); draw_line(cx,cy,cx-y,cy-x);} // 315,360
+        if (error > 0) {
+            error -= 4 * (--x);
+        }
+        error += 4 * (++y) + 2;
+    }
+}
+
 void draw_circle(unsigned int x, unsigned int y, unsigned int r) {
     int di = 3 - 2 * r; // initial 'decision parameter', see derivation [0]
     int xi = 0;
