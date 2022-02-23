@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 #include "draw.h"
 #include "gfx.h"
 
@@ -17,11 +18,13 @@ int main(int argc, char** argv) {
   /*   "disturb this place physically. This place is best shunned and left " */
   /*   "uninhabited."; */
 
-
-  int wedge = 0;
-  for (int cy = 20; cy <= 60; cy += 40)
-    for (int cx = 20; cx <= 220; cx += 40)
-      draw_arc(cx, cy, 20, wedge++, &set_pixel);
+  // for (uint8_t c = 0; c < 128; c++)
+  //   for (int col = 0; col < 16; col++)
+  //     for (int row = 0; row < 8; row++)
+  char c = 0;
+  for (int j = 0; j < 64; j += 8)
+    for (int i = 0; i < 128; i += 8)
+      draw_char8x8(i, j, c++, 1);
 
   char filename[] = "bitmap.pbm";
   draw_render(filename);

@@ -3,8 +3,8 @@
 #include "pbm.h"
 
 // 250 x 122
-#define ROWS 122
-#define COLS 250
+#define ROWS 64
+#define COLS 128
 
 // ceiling(COLS / 8), pixels are packed into bytes
 uint8_t screen[COLS / 8 + (COLS % 8 != 0)][ROWS];
